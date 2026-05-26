@@ -134,4 +134,4 @@ Make sure you have the following installed on your machine:
 
 | 🔐 Login/Signup | 👤 User Profile |
 |:---:|:---:|
-| <img src="assets/screenshots/login&signupPage.png" width="100%"> | <img src="assets/screenshots/userProfile.png" width="100%"> |
+| <img src="assets/screenshots/login&signupPage.png" width="100%"> | 

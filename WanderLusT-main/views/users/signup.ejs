@@ -1,0 +1,82 @@
+<%- layout("/layouts/boilerplate") %>
+
+<div class="row mt-3">
+  <h2 class="col-6 offset-3 login-signup" id="title">SignUp to WanderLusT</h2>
+  <div class="col-6 offset-3">
+    <form method="post" action="/signup" class="needs-validation" novalidate>
+      <div class="mb-3">
+        <label for="username" class="form-label">username</label>
+        <input
+          type="text"
+          name="username"
+          autocomplete="off"
+          placeholder="Enter username"
+          class="form-control"
+          id="username"
+          required
+        />
+        <div class="invalid-feedback">fill this field</div>
+        <div class="valid-feedback">Looks good</div>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">email</label>
+        <input
+          type="email"
+          name="email"
+          autocomplete="off"
+          placeholder="eg: someone@333gmail.com"
+          class="form-control"
+          id="email"
+          required
+        />
+        <div class="invalid-feedback">Enter a valid email address</div>
+      </div>
+
+      <div class="mb-3">
+        <div class="password-container">
+          <label for="password" class="form-label">password</label>
+          <input
+            type="password"
+            name="password"
+            placeholder="create a strong password"
+            class="form-control"
+            id="password"
+            required
+            minlength="8"
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}"
+          />
+          <i class="fa-regular fa-eye" id="togglePassword"></i>
+
+          <div class="invalid-feedback">
+            Password must be at least 8 characters long and include uppercase,
+            lowercase, a number, and a special character.
+          </div>
+        </div>
+      </div>
+      <div class="mb-3 ms-1">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          value=""
+          id="termsCheck"
+          required
+        />
+        &nbsp;
+        <label class="form-check-label" for="termsCheck">
+          I agree to the terms and conditions <a href="/terms">Terms&Policy</a>
+        </label>
+        <div class="invalid-feedback">You must agree before submitting.</div>
+      </div>
+      <div class="login-box">
+        <button class="btn btn-dark allbtn" type="submit">signUp</button>
+        <span id="have-acnt"
+          >Already have an account?<a
+            href="/login"
+            class="link-underline-primary link-underline-opacity-0-hover"
+            >login</a
+          ></span
+        >
+      </div>
+    </form>
+  </div>
+</div>

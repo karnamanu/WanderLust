@@ -1,0 +1,164 @@
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/listings"
+      ><i class="fa-regular fa-compass mr-0"></i
+      ><span id="brand" class="d-none d-sm-inline BRAND">WanderLusT</span></a
+    >
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNavAltMarkup"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav ms-auto">
+        <% const hideOnPaths = [ '/login', '/signup', '/listings/new',
+        '/resend-verification-link', '/myProfile', '/email', '/forgot-password',
+        '/reset-password', '/myListings', '/myReviews' ,'/myBookings' ]; let
+        shouldShow = true; if (typeof currentPath !== 'undefined') { const
+        isExactHide = hideOnPaths.includes(currentPath); const isEditPage =
+        currentPath.includes('/edit'); const isListingShowPage =
+        /^\/listings\/[a-zA-Z0-9]+$/.test(currentPath) && !['search',
+        'new'].includes(currentPath.split('/')[2]); shouldShow = !isExactHide &&
+        !isEditPage && !isListingShowPage; } %> <% if (shouldShow) { %>
+        <form
+          class="d-flex"
+          role="search"
+          action="/listings/search"
+          method="get"
+        >
+          <input
+            class="form-control me-2 search-inp"
+            type="search"
+            placeholder="Search Destination.."
+            aria-label="Search"
+            name="q"
+            autocomplete="off"
+          />
+          <button class="btn btn-search" type="submit">
+            <i class="fa-solid fa-magnifying-glass"></i
+            ><span class="search">Search</span>
+          </button>
+          <div id="suggestions-box"></div>
+        </form>
+        <% } %>
+      </div>
+      <div class="navbar-nav ms-auto">
+        <div class="hover-wrapper">
+          <div class="hover-text" id="hoverText">Light Mode</div>
+
+          <button id="togglePreviewBtn" class="custom-toggle-btn sun-mode">
+            <i class="fa-solid fa-sun"></i>
+          </button>
+        </div>
+
+        <span id="addlisting" class="host-tooltip-wrapper">
+          <%if(!hasListings){%>
+          <a class="nav-link" href="/listings/new"
+            ><i class="fa-solid fa-earth-americas"></i>&nbsp;Become Host</a
+          >
+
+          <div class="host-tooltip">
+            ✨ <strong>Become a Host</strong> <br />
+            Add your listing here 🏠
+          </div>
+          <%}else{%>
+          <a class="nav-link" href="/listings/new">Add new Listings</a>
+
+          <div class="host-tooltip">
+            <strong>✨Welcome Host</strong> <br />
+            Add more Listings!
+          </div>
+          <%}%>
+        </span>
+
+        <% if(!currUser) {%>
+        <button id="menu-button" class="menu-toggle" aria-label="Open menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div id="dropdown-menu" class="menu-content">
+          <a href="/login">Login</a>
+          <a href="/signup">Sign up</a>
+        </div>
+        <% } %> <% if(currUser){ %>
+        <button
+          id="menu-button"
+          class="menu-toggle"
+          aria-label="Open user menu"
+        >
+          <% if (currUser && currUser.profilePicture) { %>
+          <img
+            src="<%= currUser.profilePicture %>"
+            alt="User Profile"
+            class="nav-user-img"
+          />
+          <% } else { %>
+          <img
+            src="https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png"
+            alt="User Profile"
+            class="nav-user-img"
+          />
+          <% } %>
+        </button>
+
+        <div id="dropdown-menu" class="menu-content chrome-style">
+          <div class="menu-header">
+            <a href="/myProfile" class="UserProfile">
+              <div class="header-avatar">
+                <% if (currUser.profilePicture) { %>
+                <img
+                  src="<%= currUser.profilePicture %>"
+                  alt="<%= currUser.username || 'User' %>"
+                />
+                <% } else { %>
+                <img
+                  src="https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png"
+                  alt="User Profile"
+                />
+                <% } %>
+              </div>
+            </a>
+
+            <div class="header-info">
+              <span class="user-name"><%= currUser.username || 'User' %></span>
+              <span class="user-email">
+                <% if(currUser.isVerified==true) {%> <%= currUser.email%> <%
+                }else{%>
+                <a
+                  href="/resend-verification-link"
+                  class="verify"
+                  data-tooltip="Verify email"
+                >
+                  <span class="Email"><%= currUser.email %></span>
+                  <i class="fa-solid fa-exclamation"></i>
+                </a>
+
+                <% } %>
+              </span>
+            </div>
+          </div>
+
+          <nav class="menu-links">
+            <a href="/myProfile"> Profile</a>
+            <a href="/myListings">my Listings</a>
+            <a href="/myReviews"> Reviews</a>
+            <a href="/myBookings">Bookings</a>
+          </nav>
+
+          <hr class="menu-divider" />
+
+          <nav class="menu-links">
+            <a href="/logout" class="logout-link">
+              Logout
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </a>
+          </nav>
+        </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</nav>

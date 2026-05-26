@@ -1,0 +1,316 @@
+<% layout('/layouts/boilerplate') %>
+    <style>
+      .box {
+        max-width: 800px;
+        margin: auto;
+        background: #ffffff;
+        padding: 1.6rem 2rem;
+        border-radius: 32px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+        animation: fadeIn 0.45s ease;
+        border: 1px solid #f0e6dc;
+       
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px) scale(0.98);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 2.4rem;
+        font-weight: 900;
+        margin-bottom: 1.4rem;
+        color: #2b2b2b;
+        letter-spacing: -0.5px;
+      }
+
+      /* Modern detail rows */
+      .detail-section {
+        margin-bottom: 2rem;
+      }
+
+      .detail-row {
+        padding: 0.8rem 1rem;
+        background: #fcfcfc;
+        border: none;
+        border-radius: 16px;
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1.05rem;
+        transition: background 0.2s;
+      }
+
+      .detail-row:hover {
+        background: #f5f5f5;
+      }
+
+      /* Price box */
+      .price-box {
+        padding: 1.6rem 1.4rem;
+        background: linear-gradient(180deg, #fff7ea, #ffefd6);
+        border: 1px solid #f5d9ac;
+        border-radius: 18px;
+        text-align: center;
+        margin-top: 1.5rem;
+        box-shadow: 0 8px 20px rgba(200, 150, 70, 0.15);
+      }
+
+      .price-box span {
+        font-size: 1.6rem;
+        font-weight: 900;
+        color: #b37400;
+      }
+
+      /* Stylish button */
+      .proceed-btn {
+        display: block;
+        text-align: center;
+        padding: 1.1rem;
+        margin-top: 2.2rem;
+        background: linear-gradient(90deg, #d9a86c, #b07a4e);
+        color: white;
+        border-radius: 60px;
+        text-decoration: none;
+        font-weight: 800;
+        font-size: 1.15rem;
+        box-shadow: 0 14px 28px rgba(160, 120, 70, 0.3);
+        transition: 0.25s ease;
+      }
+
+      .proceed-btn:hover {
+        transform: translateY(-3px);
+        opacity: 0.92;
+      }
+
+      /* ===================== DARK MODE ===================== */
+      .dark-theme body {
+        background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+        color: #e6e6e6;
+      }
+
+      .dark-theme .box {
+        background: #1b1b1b;
+        border: 1px solid #333;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+      }
+
+      .dark-theme h1 {
+        color: #f1f1f1;
+      }
+
+      .dark-theme .detail-row {
+        background: #161616;
+        border-color: transparent;
+        color: #e0e0e0;
+      }
+
+      .dark-theme .detail-row:hover {
+        background: #222;
+      }
+
+      .dark-theme .price-box {
+        background: linear-gradient(180deg, #3a2d15, #2a210f);
+        border-color: #5b4a27;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      .dark-theme .price-box span {
+        color: #e6c27c;
+      }
+
+      .dark-theme .proceed-btn{
+        background: linear-gradient(90deg, #b07a4e, #8a603b);
+        box-shadow: 0 14px 28px rgba(110, 80, 45, 0.45);
+      }
+
+      /* OUTER WRAPPER FOR LIGHT MODE */
+      .checkout-outer {
+        font-family: system-ui, sans-serif;
+        /* background: linear-gradient(135deg, #f3eee8, #e8e2db); */
+        padding: 60px;
+        min-height: 100vh;
+      }
+
+      /* DARK THEME OUTER WRAPPER */
+      .dark-theme .checkout-outer {
+        background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+        color: #e6e6e6;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="checkout-outer">
+      <div class="box">
+        <h1>Checkout</h1>
+
+        <div class="detail-section">
+          <div class="detail-row">
+            <span><strong>Listing</strong></span
+            ><span></span><%= listing.title %>
+          </div>
+          <div class="detail-row">
+            <span><strong>Location</strong></span
+            ><span><%=listing.location %> , <%= listing.country %></span>
+          </div>
+          <div class="detail-row">
+            <span><strong>Check‑In</strong></span
+            ><span><%= checkIn %></span>
+          </div>
+          <div class="detail-row">
+            <span><strong>Check‑Out</strong></span
+            ><span><%= checkOut %></span>
+          </div>
+          <div class="detail-row">
+            <span><strong>Guests</strong></span
+            ><span><%= guests %></span>
+          </div>
+        </div>
+
+
+        <% let consider =0;
+        if(guests<=2){
+            consider=1;
+        }else if(guests<=4){
+            consider =2;
+        }else{
+            consider=3
+            
+        }
+        
+        amount =  (listing.price*consider*diffDays )* 1.18 
+        
+        %>
+
+
+
+        <div class="price-box">
+          <span>₹<%= amount %></span>
+          <p style="margin-top: 6px; font-size: 0.9rem; color: #6a5a40">
+            Includes all taxes & fees
+          </p>
+        </div>
+        
+       <button id="rzp-button1" class="proceed-btn" style="border: none; width:100% ;">Proceed to Payment</button>
+      </div>
+    </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+  const btn = document.getElementById("rzp-button1");
+
+  btn.addEventListener("click", async (e) => {
+    e.preventDefault();
+    btn.innerText = "Processing...";
+    btn.disabled = true; // Prevent double clicks
+
+    // ---------------------------------------------------------
+    // STEP 1: CAPTURE EJS DATA INTO JAVASCRIPT VARIABLES
+    // ---------------------------------------------------------
+    
+    // FIX: Output raw numbers without quotes for math safety
+    const amount = <%= (listing.price * consider * diffDays) * 1.18 %>; 
+    
+    // // FIX: Ensure guests is a number
+    const guests = <%= guests %>;
+    // const amount = <%= amount %>;  
+    // const guests = <%= guests %>;
+
+    // Create a clean object with all details
+    const bookingData = {
+        listingId: "<%= listing._id %>",
+        userId: "<%= currUser._id %>", 
+        checkIn: "<%= checkIn %>", // Ensure your backend parses this string correctly
+        checkOut: "<%= checkOut %>",
+        numberOfGuests: guests,
+        totalPrice: amount
+    };
+
+    try {
+        // ---------------------------------------------------------
+        // STEP 2: SEND DATA TO BACKEND (CREATE ORDER)
+        // ---------------------------------------------------------
+        const response = await axios.post(`/listings/${bookingData.listingId}/create-order`, { 
+            amount: amount,
+            listingId: bookingData.listingId 
+        });
+
+        const { order } = response.data;
+
+        // ---------------------------------------------------------
+        // STEP 3: INITIALIZE RAZORPAY
+        // ---------------------------------------------------------
+        const options = {
+            "key": "<%= process.env.RAZORPAY_KEY_ID %>", // <--- REPLACE THIS NOW
+            "amount": order.amount, 
+            "currency": "INR",
+            "name": "Wanderlust",
+            "description": "Booking for <%= listing.title %>",
+            "order_id": order.id, 
+            
+            // Success Handler
+            "handler": async function (response) {
+                
+                const verifyPayload = {
+                    razorpay_order_id: response.razorpay_order_id,
+                    razorpay_payment_id: response.razorpay_payment_id,
+                    razorpay_signature: response.razorpay_signature,
+                    bookingDetails: bookingData
+                };
+
+                try {
+                    const verifyRes = await axios.post(`/listings/${bookingData.listingId}/verify-payment`, verifyPayload);
+                    if (verifyRes.data.success) {
+                        window.location.href = verifyRes.data.redirectUrl;
+                    }
+                } catch (verifyErr) {
+                    alert("Payment successful, but verification failed.");
+                    console.error(verifyErr);
+                    btn.innerText = "Proceed to Payment";
+                    btn.disabled = false;
+                }
+            },
+            "prefill": {
+                "name": "<%= currUser.username %>",
+                "email": "<%= currUser.email %>",
+            },
+            "theme": { "color": "#fe424d" },
+            
+            // Handle Modal Close (User clicks X)
+            "modal": {
+                "ondismiss": function(){
+                    btn.innerText = "Proceed to Payment";
+                    btn.disabled = false;
+                }
+            }
+        };
+
+        const rzp1 = new Razorpay(options);
+        rzp1.open();
+
+        rzp1.on('payment.failed', function (response){
+            alert("Payment Failed: " + response.error.description);
+            btn.innerText = "Proceed to Payment";
+            btn.disabled = false;
+        });
+
+    } catch (err) {
+        console.error("Error in payment flow:", err);
+        alert("Something went wrong. Please try again.");
+        btn.innerText = "Proceed to Payment";
+        btn.disabled = false;
+    }
+  });
+</script>

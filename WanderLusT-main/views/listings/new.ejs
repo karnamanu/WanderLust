@@ -1,0 +1,161 @@
+<%- layout("/layouts/boilerplate") %>
+<link rel="stylesheet" href="/css/createListing.css" />
+<div class="row">
+  <div class="col-8 offset-2">
+    <br />
+    <h2>Create Your New Listing</h2>
+    <form
+      method="Post"
+      action="/listings"
+      novalidate
+      class="needs-validation"
+      enctype="multipart/form-data"
+      id="listingForm"
+    >
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input
+          type="text"
+          ,
+          name="title"
+          ,
+          placeholder="Enter Your sweet place title"
+          class="form-control"
+          required
+        />
+        <div class="valid-feedback">Title looks good</div>
+        <div class="invalid-feedback">Enter the title</div>
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+
+        <textarea name="description" class="form-control" required></textarea>
+        <div class="invalid-feedback">Please enter a short description</div>
+      </div>
+      <div class="row">
+        <div class="mb-3 col-12 col-md-6">
+          <label for="image" class="form-label">Listing image</label>
+          <input
+            type="file"
+            name="image"
+            id="fileInput"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <div class="mb-3 col-12 col-md-6">
+          <label class="form-label fw-medium">Categories</label>
+
+          <div class="dropdown w-100">
+            <button
+              class="btn btn-light w-100 d-flex justify-content-between align-items-center shadow-sm"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              style="border: 1px solid #ddd; border-radius: 12px"
+            >
+              <span id="dropdown-text">⬇️ Select Categories</span>
+              <span>▾</span>
+            </button>
+
+            <ul
+              class="dropdown-menu p-3 w-100 shadow"
+              style="max-height: 260px; overflow-y: auto; border-radius: 12px"
+            >
+              <% const allCategories = [ "Trending", "Rooms", "Mountains",
+              "Iconic Cities", "Castles", "Pools", "Camping", "Farms", "Arctic",
+              "Boats", "Domes", "Beaches", "Luxury", "Wildlife", "Adventure" ];
+              %> <% const categoryIcons = { "Trending": "🔥", "Rooms": "🛏️",
+              "Mountains": "⛰️", "Iconic Cities": "🌆", "Castles": "🏰",
+              "Pools": "🏊", "Camping": "🏕️", "Farms": "🌾", "Arctic": "❄️",
+              "Boats": "⛵", "Domes": "🛖", "Beaches": "🏖️", "Luxury": "💎",
+              "Wildlife": "🦁", "Adventure": "🎒" }; %> <%
+              allCategories.forEach(cat => { %>
+              <li>
+                <label class="dropdown-item">
+                  <input
+                    type="checkbox"
+                    value="<%= cat %>"
+                    class="me-2 category-check"
+                  />
+                  <%= categoryIcons[cat] %> <%= cat %>
+                </label>
+              </li>
+              <% }) %>
+            </ul>
+          </div>
+
+          <!-- Hidden dynamic array inputs go here -->
+          <div id="category-container"></div>
+
+          <!-- Dummy validator -->
+          <input type="text" id="category-validator" class="d-none" required />
+          <div class="invalid-feedback">
+            Please select at least one category.
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="mb-3 col-12 col-md-4">
+          <label for="price" class="form-label">Price</label>
+          <input
+            type="text"
+            name="price"
+            autocomplete="off"
+            inputmode="decimal"
+            pattern="[0-9]*\.?[0-9]+"
+            placeholder="1200"
+            class="form-control"
+            required
+          />
+          <div class="invalid-feedback">Please enter a valid Price</div>
+        </div>
+        <div class="mb-3 col-12 col-md-8">
+          <label for="country" class="form-label">Country</label>
+          <!-- <input
+            type="text"
+            ,
+            name="country"
+            ,
+            placeholder="India"
+            class="form-control"
+            required
+          /> -->
+          <br />
+          <select
+            id="country-select"
+            name="country"
+            class="form-select"
+            required
+            aria-label="Default select example"
+          >
+            <option value="" selected disabled>-- Choose the country --</option>
+            <%- include('../includes/country.ejs') %>
+          </select>
+          <div class="invalid-feedback">Please select the country</div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="location" class="form-label">Location</label>
+        <input
+          type="text"
+          name="location"
+          placeholder="Karnataka , Manglore"
+          autocomplete="off"
+          class="form-control"
+          required
+        />
+        <div class="invalid-feedback">Please enter the location</div>
+      </div>
+
+      <br />
+      <button class="btn btn-dark mb-3 allbtn" id="submitBtn" type="submit">
+        Add
+      </button>
+    </form>
+  </div>
+</div>
+

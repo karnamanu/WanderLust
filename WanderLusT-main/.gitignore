@@ -1,0 +1,8 @@
+# Ignore environment variables file
+.env
+# Dependencies 
+node_modules
+
+Classroom
+
+init/

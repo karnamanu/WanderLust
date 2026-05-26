@@ -1,0 +1,325 @@
+/* --- Color Variables (Easy to customize) --- */
+:root {
+  /* Light Theme (Logged Out) */
+  --nav-bg: #ffffff;
+  --nav-border: #e0e0e0;
+  --nav-text: #333;
+  --nav-hover-bg: #f4f4f4;
+
+  /* Dark Theme (Logged In) */
+  /* --dark-bg: #282828;
+  --dark-bg-hover: #3a3a3a;
+  --dark-border: #444;
+  --dark-text-primary: #e8eaed;
+  --dark-text-secondary: #bdc1c6;
+  --dark-red: #f28b82; */
+
+  --dark-bg: var(--nav-bg); /* Use light background */
+  --dark-bg-hover: var(--nav-hover-bg); /* Use light hover */
+  --dark-border: var(--nav-border); /* Use light border */
+  --dark-text-primary: var(--nav-text); /* Use dark text */
+  --dark-text-secondary: #555; /* A slightly lighter dark text */
+  --dark-red: #d9534f;
+
+  /* General */
+  --primary-color: #007bff;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  margin: 0;
+}
+
+/* --- Main Navbar Structure --- */
+.navbar {
+  background-color: var(--nav-bg);
+  border-bottom: 1px solid var(--nav-border);
+  padding: 10px 20px;
+  display: flex;
+  justify-content: flex-end; /* Pushes menu to the right */
+}
+
+.navbar-menu {
+  position: relative; /* Required for the dropdown */
+}
+
+/* --- Round Button (Works for both states) --- */
+/* 1. The Button Container */
+.menu-toggle {
+  width: 40px; /* Fixed width */
+  height: 40px; /* Fixed height */
+  border-radius: 50%; /* Makes the button a circle */
+  padding: 0; /* Remove default button padding */
+  border: 1px solid #ccc; /* Optional: subtle border */
+  background: white;
+  cursor: pointer;
+  overflow: hidden; /* CRITICAL: Cuts off any part of image outside the circle */
+
+  /* Flexbox centers the content perfectly */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 2. The Image styling */
+.nav-user-img {
+  width: 100%; /* Fill the button width */
+  height: 100%; /* Fill the button height */
+  object-fit: cover; /* THE MAGIC: Zooms image to fill circle without stretching */
+  border-radius: 50%; /* Ensures image itself is round */
+  display: block; /* Removes weird bottom spacing */
+}
+
+/* 3. Optional: Hover effect */
+.menu-toggle:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  border-color: #b3b3b3;
+}
+
+/* --- Base Dropdown (Hidden by default) --- */
+.menu-content {
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px) translateX(-20px);
+  position: absolute;
+  top: 120%;
+  right: 0;
+  min-width: 180px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+}
+
+/* --- Show Class (Added by JavaScript) --- */
+.menu-content.show {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) translateX(-20px);
+}
+
+/* --- STYLE 1: Light Menu (Logged Out) --- */
+/* Uses :not() to only select the non-chrome-style menu */
+.menu-content:not(.chrome-style) {
+  background-color: var(--nav-bg);
+  border: 1px solid var(--nav-border);
+  overflow: hidden; /* Clips the links to the border-radius */
+}
+
+.menu-content:not(.chrome-style) a {
+  display: block;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: var(--nav-text);
+  font-size: 0.95rem;
+}
+
+.menu-content:not(.chrome-style) a:hover {
+  background-color: var(--nav-hover-bg);
+}
+
+/* --- STYLE 2: Dark Menu (Logged In) --- */
+.menu-content.chrome-style {
+  background-color: var(--dark-bg);
+  border: 1px solid var(--dark-border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  min-width: 280px;
+  padding: 8px 0;
+}
+
+.menu-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--dark-border);
+  margin-bottom: 8px;
+}
+
+.header-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--dark-bg-hover);
+  color: var(--dark-text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.header-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.header-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.header-info .user-name {
+  font-weight: 600;
+  color: var(--dark-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header-info .user-email {
+  font-size: 0.85rem;
+  color: var(--dark-text-secondary);
+  white-space: nowrap;
+  /* overflow: hidden; */
+  overflow: visible;
+  text-overflow: ellipsis;
+}
+
+.chrome-style .menu-links a {
+  display: block;
+  padding: 10px 16px;
+  text-decoration: none;
+  color: var(--dark-text-primary);
+  font-size: 0.9rem;
+  border-radius: 4px;
+  margin: 2px 8px;
+}
+
+.chrome-style .menu-links a:hover {
+  background-color: var(--dark-bg-hover);
+}
+
+.menu-divider {
+  border: none;
+  border-top: 1px solid var(--dark-border);
+  margin: 8px 0;
+}
+
+.chrome-style .logout-link {
+  color: var(--dark-red);
+}
+
+.chrome-style .logout-link:hover {
+  color: var(--dark-red);
+  background-color: rgba(242, 139, 130, 0.1);
+}
+
+.header-avatar:hover {
+  transform: scale(1.03); /* Makes it 10% bigger */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  cursor: pointer; /* Changes the mouse to a hand */
+}
+
+/* ================================
+   DARK THEME (Hamburger Menu)
+   Triggered when <body class="dark-theme">
+================================ */
+
+/* Navbar itself */
+.dark-theme .navbar {
+  background-color: #121212;
+  border-bottom: 1px solid #1e1e1e;
+}
+
+/* The round button circle */
+.dark-theme .menu-toggle {
+  background: #1c1c1c;
+  border: 1px solid #333;
+}
+
+.dark-theme .menu-toggle:hover {
+  border-color: #555;
+  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.08);
+}
+
+/* Profile image in button */
+.dark-theme .nav-user-img {
+  filter: brightness(0.9);
+}
+
+/* Light dropdown (logged out) */
+.dark-theme .menu-content:not(.chrome-style) {
+  background: #1c1c1c;
+  border: 1px solid #333;
+}
+
+.dark-theme .menu-content:not(.chrome-style) a {
+  color: #eaeaea;
+}
+
+.dark-theme .menu-content:not(.chrome-style) a:hover {
+  background: #2a2a2a;
+}
+
+/* ===========================
+      DARK Chrome Style
+=========================== */
+
+.dark-theme .menu-content.chrome-style {
+  background-color: #1c1c1c;
+  border: 1px solid #333;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
+}
+
+.dark-theme #menu-button i {
+  color: white !important;
+}
+
+/* Profile block */
+.dark-theme .menu-header {
+  border-bottom: 1px solid #333;
+}
+
+.dark-theme .header-avatar {
+  background-color: #2a2a2a;
+  /* color: #eaeaea; */
+  color: white;
+}
+
+.dark-theme .header-avatar img {
+  filter: brightness(0.92);
+}
+
+.dark-theme .header-info .user-name {
+  color: #fff;
+}
+
+.dark-theme .header-info .user-email {
+  color: #b7b7b7;
+}
+
+/* Menu links */
+.dark-theme .chrome-style .menu-links a {
+  color: #f0f0f0;
+}
+
+.dark-theme .chrome-style .menu-links a:hover {
+  background-color: #2a2a2a;
+}
+
+/* Divider */
+.dark-theme .menu-divider {
+  border-top: 1px solid #333;
+}
+
+/* Logout */
+.dark-theme .chrome-style .logout-link {
+  color: #ff7676;
+}
+
+.dark-theme .chrome-style .logout-link:hover {
+  background-color: rgba(255, 118, 118, 0.13);
+}
+
+/* Avatar hover in dark */
+.dark-theme .header-avatar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.08);
+}

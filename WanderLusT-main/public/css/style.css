@@ -1,0 +1,61 @@
+body {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  flex: 1;
+}
+
+/* Buttons */
+.add-btn,
+.edit-btn {
+  background-color: #fe424d !important;
+  border: none !important;
+}
+
+/* All buttons hover */
+.allbtn:hover {
+  background-color: #fe424d !important;
+  color: white !important;
+  border: 1px solid #fe424d !important;
+}
+
+/* Review user icon */
+.rvw-user {
+  font-size: 13px !important;
+  padding-left: 4.5px !important;
+  padding-top: 1px !important;
+  padding-bottom: 3px !important;
+  margin-right: 4px !important;
+}
+
+#rvw-user {
+  height: 10px !important;
+  width: 10px !important;
+  border: 0.5px solid black !important;
+  border-radius: 50% !important;
+  margin: 3px !important;
+}
+
+/* ==============Dark Mode ========================== */
+
+.dark-theme body {
+  background-color: #0f0f0f;
+  color: #e6e6e6;
+}
+
+.dark-theme .add-btn,
+.edit-btn {
+  background-color: #fe424d !important;
+  border: none !important;
+}
+
+/* All buttons hover */
+.dark-theme .allbtn:hover {
+  background-color: #fe424d !important;
+  color: white !important;
+  border: 1px solid #fe424d !important;
+}

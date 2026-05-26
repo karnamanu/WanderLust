@@ -1,0 +1,46 @@
+<%- layout('/layouts/boilerplate') %>
+
+<link rel="stylesheet" href="/css/myListings.css" />
+
+<body>
+  <div class="container py-5">
+    <% if(listings.length){%>
+    <h2
+      class="mb-4 heading"
+      style="color: var(--text-dark); font-weight: 500; letter-spacing: -0.5px"
+    >
+      My Listings
+    </h2>
+
+    <div id="listing-box">
+      <% for(let listing of listings) {%>
+      <a href="/listings/<%= listing._id %>" class="card-link">
+        <div class="card listing-card">
+          <img
+            src="<%= listing.image.url %>"
+            class="listing-img"
+            alt="<%= listing.image.filename %>"
+          />
+          <div class="card-body">
+            <div>
+              <h5 class="card-title"><%= listing.title %></h5>
+              <p class="location-text"><%= listing.location %></p>
+            </div>
+            <div>
+              <div class="price-text">
+                &#8377;<%= listing.price.toLocaleString("en-IN") %>
+                <span>/ night</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+      <% } %>
+    </div>
+    <%}else{ %>
+
+    <h2 class="nolistings">You don't have any listings</h2>
+
+    <% } %>
+  </div>
+</body>

@@ -1,0 +1,52 @@
+<% layout('/layouts/boilerplate') %>
+  <link rel="stylesheet" href="/css/myReviews.css">
+  </head>
+  <body>
+    <div class="container"> 
+
+
+        <% if(reviews.length === 0){ %>
+           <h1 class="noReview">You don't gave any Reviews</h1>
+        <% }else{ %>
+
+        <h2>My Reviews</h2>
+
+
+        <% for(review of reviews){ %>
+
+      <div class="review-card">
+        <img
+          class="listing-img"
+          src="<%=review.listing.image.url %>"
+          alt="<%= review.listing.image.filename %>"
+        />
+        <div class="review-content">
+          <div class="stars">
+            <% for(let i=0 ; i< review.rating ; i++){ %>
+                ★
+            <% } %>
+          </div>
+          <h3><%= review.listing.title %></h3>
+          <p class="review-text">
+           <%= review.comment %>
+          </p>
+        </div>
+        <form 
+              class="delete-form" 
+              method="POST" 
+              action="/listings/<%= review.listing._id %>/reviews/<%= review._id %>?_method=DELETE&redirect_to=/myReviews"
+            >
+              <button class="delete-btn" title="Delete this review">
+                <i class="fa-regular fa-trash-can"></i>
+              </button>
+          </form>
+      </div>
+      <% } %>
+      
+
+      <% } %>
+
+     
+    </div>
+  </body>
+
